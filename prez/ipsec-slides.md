@@ -20,26 +20,26 @@ IPsec secure IP traffic to:
 
 # IPsec Overview - Use Case - VPN
 
-<img src="https://github.com/mglt/lecture-ipsec.git/prez/fig/use-case-vpn.svg" height="500">
+<img src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/use-case-vpn.svg" height="500">
 
 
 ---
 
 # IPsec Overview - Use Case - GW-to-GW
 
-<img src="https://github.com/mglt/lecture-ipsec.git/prez/fig/use-case-gw2gw.svg" height="500">
+<img src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/use-case-gw2gw.svg" height="500">
 
 ---
 
 # IPsec Overview - Use Case - E2E Security
 
-<img src="https://github.com/mglt/lecture-ipsec.git/prez/fig/use-case-e2e-sec-tunnel.svg" height="500">
+<img src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/use-case-e2e-sec-tunnel.svg" height="500">
 
 ---
 
 # IPsec Overview - Use Case - E2E Security
 
-<img src="https://github.com/mglt/lecture-ipsec.git/prez/fig/use-case-e2e-sec-transport.svg" height="500">
+<img src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/use-case-e2e-sec-transport.svg" height="500">
 
 ---
 
@@ -136,7 +136,7 @@ While they have different usage both protocols can likely be interchanged:
 # IPsec Architecture
 
 
-<img  align="right"  src="https://github.com/mglt/lecture-ipsec.git/prez/fig/ipsec-architecture.svg" height="300">
+<img  align="right"  src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/ipsec-architecture.svg" height="300">
 
 IPsec architecture involves:
 
@@ -153,7 +153,7 @@ PAD provides information for IKEv2 authentication.
 
 # IPsec Architecture:
 
-<img  align="right"  src="https://github.com/mglt/lecture-ipsec.git/prez/fig/ipsec-architecture.svg" height="300">
+<img  align="right"  src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/ipsec-architecture.svg" height="300">
 
 
 IPsec processes traffic according to these databases. 
@@ -166,7 +166,7 @@ IPsec processes Inbound / Outbound differently
 
 # IPsec Architecture - Processing Outbound Packets
 
-<img  align="right"  src="https://github.com/mglt/lecture-ipsec.git/prez/fig/ipsec-architecture.svg" height="300">
+<img  align="right"  src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/ipsec-architecture.svg" height="300">
 
 Outgoing packet is *matched* against the SPD:
 * Traffic Selectors (TS)
@@ -185,7 +185,7 @@ The packet is encrypted as indicated by the SA
 
 # IPsec Architecture - Processing Inbound Packets
 
-<img  align="right"  src="https://github.com/mglt/lecture-ipsec.git/prez/fig/ipsec-architecture.svg" height="300">
+<img  align="right"  src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/ipsec-architecture.svg" height="300">
 
 Incoming IPsec packet is *matched* against the SAD
 * Security Policy Index (SPI)
@@ -199,7 +199,7 @@ Clear text packet is matched against the SPD
 
 # IPsec Architecture - Processing Inbound Packets
 
-<img  align="right"  src="https://github.com/mglt/lecture-ipsec.git/prez/fig/ipsec-architecture.svg" height="300">
+<img  align="right"  src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/ipsec-architecture.svg" height="300">
 
 Incoming non IPsec packet is *matched* against the SPD
 * Traffic Selectors (TS)
@@ -1011,7 +1011,7 @@ Initial Phase:
 * MN connects a server with a private session: $IP^{inner}_{MN}$, $IP^{inner}_{MEDIA}$
 * MN tunnels the private session to the Security Gateway: $IP^{outer}_{MN}$ and $IP_{SG}$
 
-<img  align="center"   src="https://github.com/mglt/lecture-ipsec.git/prez/fig/protocol-description-sg-init.svg" height="500">
+<img  align="center"   src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/protocol-description-sg-init.svg" height="500">
 
 ---
 # MOBIKE - Mobility
@@ -1019,7 +1019,7 @@ Initial Phase:
 Mobility Phase:
 * MN changes ISP and the tunnel endpoint becomes $IP^{outer}_{MN}$
  
-<img  align="center"  src="https://github.com/mglt/lecture-ipsec.git/prez/fig/protocol-description-sg-mobility.svg" height="500">
+<img  align="center"  src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/protocol-description-sg-mobility.svg" height="500">
 
 ---
 # MOBIKE - Multihoming
@@ -1029,7 +1029,7 @@ Initial Phase:
 * MN tunnels the private session to the Security Gateway: $IP^{outer}_{MN}$  $IP_{SG}$
 * MN adversice being also reachable on $IP^{outer}_{NEW_MN}$ if $IP^{outer}_{MN}$ fails  
 
-<img  align="center"   src="https://github.com/mglt/lecture-ipsec.git/prez/fig/protocol-description-sg-init-multih.svg" height="500">
+<img  align="center"   src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/protocol-description-sg-init-multih.svg" height="500">
 
 ---
 # MOBIKE - Multihoming
@@ -1038,7 +1038,7 @@ Mobility Phase:
 * MN tunnel endpoint IP^wlan1_mn is not reachable
 * Media server switches traffic to $IP^{outer}_{NEW_MN}$
  
-<img  align="center"  src="https://github.com/mglt/lecture-ipsec.git/prez/fig/protocol-description-sg-multih.svg" height="500">
+<img  align="center"  src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/protocol-description-sg-multih.svg" height="500">
 
 
 ---
