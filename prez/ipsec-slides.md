@@ -8,6 +8,8 @@
 
 # IPsec Overview 
 
+IPsec designates an architecture [[RFC4301](https://tools.ietf.org/html/rfc4301)] as well as a suite of protocols AH [[RFC4302](https://tools.ietf.org/html/rfc4302)], ESP [[RFC4303](https://tools.ietf.org/html/rfc4303)], IKEv2 [[RFC7296](https://www.rfc-editor.org/rfc/rfc7296.html)]
+
 IPsec secure IP traffic to:
 * Virtual Private Network (VPN): 
     * Extend a trusted domnain over an untrusted domain 
@@ -20,39 +22,44 @@ IPsec secure IP traffic to:
 
 # IPsec Overview - Use Case - VPN
 
-<img src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/use-case-vpn.svg" height="500">
+<img src="/home/emigdan/gitlab/ipsec-lecture/prez/fig/use-case-vpn.svg" height="500">
 
 
 ---
 
 # IPsec Overview - Use Case - GW-to-GW
 
-<img src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/use-case-gw2gw.svg" height="500">
+<img src="/home/emigdan/gitlab/ipsec-lecture/prez/fig/use-case-gw2gw.svg" height="500">
 
 ---
 
 # IPsec Overview - Use Case - E2E Security
 
-<img src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/use-case-e2e-sec-tunnel.svg" height="500">
+<img src="/home/emigdan/gitlab/ipsec-lecture/prez/fig/use-case-e2e-sec-tunnel.svg" height="500">
 
 ---
 
 # IPsec Overview - Use Case - E2E Security
 
-<img src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/use-case-e2e-sec-transport.svg" height="500">
+<img src="/home/emigdan/gitlab/ipsec-lecture/prez/fig/use-case-e2e-sec-transport.svg" height="500">
 
 ---
 
 # IPsec Overview 
 
+<img src="/home/emigdan/gitlab/ipsec-lecture/prez/fig/use-case-vpn.svg" height="200" align="right">
+
+
 IPsec secures traffic over untrusted network. 
 
-* Endpoints are rusted and authenticate each other
-* Each endpoint is configured to secure traffic with its peer.
+* Endpoints are trusted and authenticated
+* Endpoint are configured to secure traffic with its peer.
     * Inbound and Outbound traffic    	
 ---
 
 # IPsec Overview 
+
+<img src="/home/emigdan/gitlab/ipsec-lecture/prez/fig/use-case-vpn.svg" height="200" align="right">
 
 Securely exchanging traffic requires an agreement on:
 * Keying material and cryptographic algorithms
@@ -65,7 +72,7 @@ Manual configuration is possible, but using key exchange agreement is recommende
 
 # IPsec Overview 
 
-Using Ikev2 enables to enhance:
+Using IKE2 enhances:
   * Cryptographic material management:
     * Negotiation is delegated to the peers 	
     * Automated life cycle 
@@ -90,7 +97,7 @@ IPsec trust model can be recaped as follows:
 
 ---
 
-# IPsec Overview - Protocol SUite
+# IPsec Overview - Protocol Suite
 
 IPsec defines an architecture and a suite of protocols:
 
@@ -124,7 +131,7 @@ TLS secures Web traffic:
 # IPsec Overview - Position to TLS
 
 IPsec and TLS share a similar construction:
-* Key Excgnage protocol to configure / manage the data plan
+* Key Exchange protocol to configure / manage the data plan
 * Exchange traffic through the data plan
 
 While they have different usage both protocols can likely be interchanged:
@@ -136,7 +143,7 @@ While they have different usage both protocols can likely be interchanged:
 # IPsec Architecture
 
 
-<img  align="right"  src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/ipsec-architecture.svg" height="300">
+<img  align="right"  src="/home/emigdan/gitlab/ipsec-lecture/prez/fig/ipsec-architecture.svg" height="300">
 
 IPsec architecture involves:
 
@@ -153,7 +160,7 @@ PAD provides information for IKEv2 authentication.
 
 # IPsec Architecture:
 
-<img  align="right"  src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/ipsec-architecture.svg" height="300">
+<img  align="right"  src="/home/emigdan/gitlab/ipsec-lecture/prez/fig/ipsec-architecture.svg" height="300">
 
 
 IPsec processes traffic according to these databases. 
@@ -166,7 +173,7 @@ IPsec processes Inbound / Outbound differently
 
 # IPsec Architecture - Processing Outbound Packets
 
-<img  align="right"  src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/ipsec-architecture.svg" height="300">
+<img  align="right"  src="/home/emigdan/gitlab/ipsec-lecture/prez/fig/ipsec-architecture.svg" height="300">
 
 Outgoing packet is *matched* against the SPD:
 * Traffic Selectors (TS)
@@ -185,7 +192,7 @@ The packet is encrypted as indicated by the SA
 
 # IPsec Architecture - Processing Inbound Packets
 
-<img  align="right"  src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/ipsec-architecture.svg" height="300">
+<img  align="right"  src="/home/emigdan/gitlab/ipsec-lecture/prez/fig/ipsec-architecture.svg" height="300">
 
 Incoming IPsec packet is *matched* against the SAD
 * Security Policy Index (SPI)
@@ -199,7 +206,7 @@ Clear text packet is matched against the SPD
 
 # IPsec Architecture - Processing Inbound Packets
 
-<img  align="right"  src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/ipsec-architecture.svg" height="300">
+<img  align="right"  src="/home/emigdan/gitlab/ipsec-lecture/prez/fig/ipsec-architecture.svg" height="300">
 
 Incoming non IPsec packet is *matched* against the SPD
 * Traffic Selectors (TS)
@@ -218,7 +225,7 @@ SPD contains a high level description of the Security Policies
 
 # IPsec Architecture - Security Policy Database
 
-The SPD complexity as it needs to meet both:
+The SPD's complexity results from opposite goals:
 * Performance: matching every inbound / outbound packets 
 * Manageability: expressing human readable / abstract policies.
   
@@ -379,7 +386,7 @@ Note:
 
 # IPsec Architecture: SAD
 
-Outbound packet uses SA to implement a PROTECT SP:
+Outbound packets use SA to implement a PROTECT SP:
 * The appropriated SA is provided *by* the SP matching the clear text packet, using internal structure of the system (pointer) 
 * The SA enables encryption of the packet
  
@@ -432,7 +439,7 @@ Peer Authorization Database:
 
 # IPsec ESP / AH
 
-IPsec protected traffic uses a combination of two protocols:
+IPsec protectes traffic with a combination of two protocols:
 * ESP Encapsulated Security Payload securing the IP payload 
   * ESP leaves unprotected the IP  header
   * Widely deployed
@@ -668,15 +675,69 @@ HDR, SAi1, KEi, Ni  -->
 * SAi1, SAr1: proposal and selection of IKE_SA crypto algorithm
 * KEi, KEr: public Diffie Hellman Value to generate SKEYSEED 
 * Ni, Nr: nonces to generate SKEYSEED 
+---
+
+At this stage the peers have exchanged a shared secret, but...
+* Peers are still unauthenticated
+* The IKEv2 channel is still unencrypted
+* Negotiation of the SA has not yet even started. 
 
 ---
-# IKEv2 IKE_AUTH
 
-IKE_AUTH authenticates the IKE_SA and binds:
-* Identities (IDs), 
-* Public Keys (CERT)
-* Exchanged message 
+## Focus on Diffie Hellman 
 
+Diffie Hellman enables Alice and Bob to agree on a shared secret without revealing that secret.
+
+Alice and Bob agree on a finite cyclic group G:
+* of order n -- a very large number (2048 bit long) 
+* and a generator g in G. 
+
+```
+Alice                              Bob
+
+a                g^a mod n
+                --------->
+                 g^b mod n      b
+                <---------     
+(g^b)^a  mod n                  (g^a)^b mod n 
+ 
+```
+
+Discrete logarithm says that it is hard to infer $a$ from $g^a$
+
+
+---
+
+## Focus on Key derivation 
+
+Protected communications usually involve multiple keys:
+
+* Each key is usually dedicated to a specific task: 
+  * encryption, authentication, ...
+  * initiator, responder, ...
+
+To avoid one negotiation per key, we usually have:
+1. Negotiation of a shared secret
+2. Derivation of the keys from the share secret
+
+---
+
+## Focus on Key derivation 
+
+The agreed shared secret is used to derive multiple secrets to:
+* Protect the IKE_SA IKEv2 Channel:
+  * Authentication SK_a
+  * Encryption SK_e 
+* Derive the keying material associated to the SA
+  * SK_d
+* Authenticate the peers 
+  * SK_p
+
+```
+SKEYSEED = prf(Ni | Nr, g^ir)
+{SK_d | SK_ai | SK_ar | SK_ei | SK_er | SK_pi | SK_pr}
+         = prf+ (SKEYSEED, Ni | Nr | SPIi | SPIr)
+```                   
 ---
 # IKEv2 IKE_AUTH
 
@@ -699,6 +760,80 @@ HDR, SK {IDi, [CERT,] [CERTREQ,]
 * AUTH: authentication payload
 
 ---
+
+## Focus on Digital Signature
+
+The purpose of digital signature is to cryptographicaly proves:
+* It is really *me* sending the message
+* The message you receive is the one I have sent, e.g. has not been altered
+
+A cryptographic signature is:
+1. Generated by the owner of the private key
+2. Validated with the associated public key, the signature and message
+
+---
+
+```
+Alice                                         Bob
+
+k_prv = private_key, 
+k_pbl = public_key, 
+m = message
+
+s = sign(k_prv, m)
+
+               m, s, k_pbl
+               ------------------------> 
+                                 verify(m, s, k_pbl)
+```
+
+---
+
+## Focus on AUTH
+
+AUTH is not limited to a single message m, but the IKE_SA, that is:
+* IKE_INIT (where the shared secret has been agreed)
+* IKE_AUTH with IDs, CERT
+
+
+AUTH can be seen as the signature where the signed data is:
+* A known structure with sent and received information
+* Built by each peer for signing / verifying
+
+What has been sent corresponds to what has been received 
+
+---
+## Focus on AUTH
+
+Building AUTH:
+* build data 
+* sign data
+
+Verifying AUTH:
+* build peer's data
+* verifying the signature 
+
+```
+AUTHi = sign( IKE_INIT_request', Nr, prf(SK_pi, IDi') )
+AUTHr = sign( IKE_INIT_response', Ni, prf(SK_pr, IDr') )
+``` 
+---
+
+## Focus on IDs
+
+AUTH enables to binds the IKE_SA to the owner of the private key
+
+This onwer is designated by its ID, but:
+* How to ensure ID owns the private key ?
+* How to make sure it is an authorized peer ?
+
+CERT binds the ID and the public Key
+* This may involve a Trusted Anchor (CA)
+
+PAD indicates the peer is authorized
+
+---
+
 # IKEv2 CREATE_CHILD_SA
 
 CREATE_CHILD_SA negotiates the SA:
@@ -1011,7 +1146,7 @@ Initial Phase:
 * MN connects a server with a private session: $IP^{inner}_{MN}$, $IP^{inner}_{MEDIA}$
 * MN tunnels the private session to the Security Gateway: $IP^{outer}_{MN}$ and $IP_{SG}$
 
-<img  align="center"   src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/protocol-description-sg-init.svg" height="500">
+<img  align="center"   src="/home/emigdan/gitlab/ipsec-lecture/prez/fig/protocol-description-sg-init.svg" height="500">
 
 ---
 # MOBIKE - Mobility
@@ -1019,7 +1154,7 @@ Initial Phase:
 Mobility Phase:
 * MN changes ISP and the tunnel endpoint becomes $IP^{outer}_{MN}$
  
-<img  align="center"  src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/protocol-description-sg-mobility.svg" height="500">
+<img  align="center"  src="/home/emigdan/gitlab/ipsec-lecture/prez/fig/protocol-description-sg-mobility.svg" height="500">
 
 ---
 # MOBIKE - Multihoming
@@ -1029,16 +1164,16 @@ Initial Phase:
 * MN tunnels the private session to the Security Gateway: $IP^{outer}_{MN}$  $IP_{SG}$
 * MN adversice being also reachable on $IP^{outer}_{NEW_MN}$ if $IP^{outer}_{MN}$ fails  
 
-<img  align="center"   src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/protocol-description-sg-init-multih.svg" height="500">
+<img  align="center"   src="/home/emigdan/gitlab/ipsec-lecture/prez/fig/protocol-description-sg-init-multih.svg" height="500">
 
 ---
 # MOBIKE - Multihoming
 
 Mobility Phase:
-* MN tunnel endpoint IP^wlan1_mn is not reachable
-* Media server switches traffic to $IP^{outer}_{NEW_MN}$
+* MN tunnel endpoint $IP^{outer}_{MN}$ is not reachable
+* Media server switches traffic to $IP^{outer}_{NEW\_MN}$
  
-<img  align="center"  src="https://github.com/mglt/lecture-ipsec/blob/master/prez/fig/protocol-description-sg-multih.svg" height="500">
+<img  align="center"  src="/home/emigdan/gitlab/ipsec-lecture/prez/fig/protocol-description-sg-multih.svg" height="500">
 
 
 ---
@@ -1297,4 +1432,4 @@ This worked, and the initiator requests the peer to switch to new addresses.
 ---
 # Acknowledgment
 
-* OSA
+* [Open Security Architecture](http://www.opensecurityarchitecture.org/cms/)
