@@ -10,11 +10,11 @@
 
 IPsec designates an architecture [[RFC4301](https://tools.ietf.org/html/rfc4301)] as well as a suite of protocols AH [[RFC4302](https://tools.ietf.org/html/rfc4302)], ESP [[RFC4303](https://tools.ietf.org/html/rfc4303)], IKEv2 [[RFC7296](https://www.rfc-editor.org/rfc/rfc7296.html)]
 
-IPsec secure IP traffic to:
+IPsec secures IP traffic for:
 * Virtual Private Network (VPN): 
-    * Extend a trusted domnain over an untrusted domain 
+    * Extend a trusted domain over an untrusted domain 
 * Gateway-to-Gateway:
-    * Interconnect two trusted domain over untrusted network
+    * Interconnect two trusted domain over an untrusted network
 * End-to-End secure communication
     * Terminating nodes secure communications using IPsec similarly to TLS
 
@@ -72,7 +72,7 @@ Manual configuration is possible, but using key exchange agreement is recommende
 
 # IPsec Overview 
 
-Using IKE2 enhances:
+Using IKEv2 enhances:
   * Cryptographic material management:
     * Negotiation is delegated to the peers 	
     * Automated life cycle 
@@ -103,11 +103,11 @@ IPsec defines an architecture and a suite of protocols:
 
 * Architecture that defines the IPsec engine:
     * Security Policies (SP), 
-    * Security Asscoiations (SA) 
-* IKEv2: Internet Key Exchange Protocol (Control Plan)
+    * Security Associations (SA) 
 * IPsec packet processing (Data Plan):
   * ESP: Encapsulation Security *Payload* 
   * AH: Authentication *Header*
+* IKEv2: Internet Key Exchange Protocol (Control Plan)
 
 ---
 
@@ -134,7 +134,7 @@ IPsec and TLS share a similar construction:
 * Key Exchange protocol to configure / manage the data plan
 * Exchange traffic through the data plan
 
-While they have different usage both protocols can likely be interchanged:
+While they have different usages both protocols can likely be interchanged:
 * TLS can perform mutual authentication
 * IPsec can also leave one peer unauthenticated
 
@@ -210,8 +210,6 @@ Clear text packet is matched against the SPD
 
 Incoming non IPsec packet is *matched* against the SPD
 * Traffic Selectors (TS)
-* BYPASS, DISCARD are processed immediately 
-* PROTECT are discarded
 
 ---
 
@@ -368,7 +366,7 @@ The ordered SPD will look like:
 ---
 # IPsec Architecture: SAD
 
-SA indicates the policy associated to the traffic:
+SA implements the policy associated to the traffic:
 * Processing info to implement the PROTECT Policy:
     * keying meterial and algorithm
     * IP processing information (ESP, AH, mode)
@@ -603,14 +601,17 @@ IPv6  |             | ext hdrs |     |      |
       ---------------------------------------
 
                  AFTER APPLYING AH
-      ------------------------------------------------------------
-IPv6  |             |hop-by-hop, dest*, |    | dest |     |      |
-      |orig IP hdr  |routing, fragment. | AH | opt* | TCP | Data |
-      ------------------------------------------------------------
-      |<--- mutable field processing -->|<-- immutable fields -->|
-      |<---- authenticated except for mutable fields ----------->|
+     --------------------------------------------------------------
+IPv6 |           | ext hdrs*|    |            | ext hdrs*|   |    |
+     |new IP hdr*|if present| AH |orig IP hdr*|if present|TCP|Data|
+     --------------------------------------------------------------
+     |<--- mutable field -->|<--------- immutable fields -------->|
+     |       processing     |
+     |<-- authenticated except for mutable fields in new IP hdr ->|
 
-            * = if present, could be before AH, after AH, or both
+       * = if present, construction of outer IP hdr/extensions and
+           modification of inner IP hdr/extensions is discussed in
+           the Security Architecture document.
 ```
 </font>
 
@@ -633,8 +634,8 @@ IKEv2 is the Internet Key Exchange Protocol:
 
 The IKEv2 negotiation performs the following exchange type:
 * IKE_INIT
-* CREATE_CHILD_SA
 * IKE_AUTH
+* CREATE_CHILD_SA
 
 <font size="5">
   
@@ -659,7 +660,7 @@ INFORMATIONAL exchanges are performed latter
 
 IKE_INIT results in the agreement of:
 * SKEYSEED from which all IKE_SA keys are derives 
-* cyprotgraphic algorithm use for the IKE channel (IKE_SA)
+* cryptographic algorithm use for the IKE channel (IKE_SA)
 
 <font size="5">
   
