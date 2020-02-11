@@ -312,13 +312,13 @@ The ordered SPD will look like:
 
 | Traffic Selectors | PFP | SPD Cache |   Processing       |
 |-------------------|-----|-----------|---------------------
-| IP_dst: $IP^{outer}_{MN}$ | 0 | $IP^{outer}_{MN}$ | Policy: BYPASS | 
+| IP_dst: $ANY$     | 0   | $IP^{outer}_{MN}$ | Policy: BYPASS | 
 | IP_src: $IP_{SG}$ | 0   | $IP_{SG}$ |   
 | Port_dst: 500     | 0   | 500       | 
 | Port_src: 500     | 0   | 500       | 
 |                   |     |           |
 | IP_dst: $IP_{SG}$ | 0   | $IP_{SG}$ | Policy: BYPASS   
-| IP_src: $IP^{outer}_{MN}$       | 0   | $IP^{outer}_{MN}$       | 
+| IP_src: $ANY$     | 0   | $IP^{outer}_{MN}$       | 
 | Port_dst: 500     | 0   | 500       | 
 | Port_src: 500     | 0   | 500       | 
 
@@ -640,16 +640,16 @@ The IKEv2 negotiation performs the following exchange type:
 <font size="5">
   
 ```
-    Initiator                         Responder
-    -------------------------------------------------------------------
-    HDR, SAi1, KEi, Ni  -->
-                                 <--  HDR, SAr1, KEr, Nr, [CERTREQ]
+Initiator                         Responder
+-------------------------------------------------------------------
+HDR, SAi1, KEi, Ni  -->
+                             <--  HDR, SAr1, KEr, Nr, [CERTREQ]
 
-    HDR, SK {IDi, [CERT,] [CERTREQ,]
+HDR, SK {IDi, [CERT,] [CERTREQ,]
         [IDr,] AUTH, SAi2,
         TSi, TSr}  -->
-                                <--  HDR, SK {IDr, [CERT,] AUTH,
-                                          SAr2, TSi, TSr}
+                            <--  HDR, SK {IDr, [CERT,] AUTH,
+                                      SAr2, TSi, TSr}
 ```
 </font>
 
@@ -705,6 +705,23 @@ a                g^a mod n
 ```
 
 Discrete logarithm says that it is hard to infer $a$ from $g^a$
+
+---
+
+## Focus on Diffie Hellman 
+
+Diffie Hellman is sensible to the man-in-the-middle attack
+
+```
+Alice               Eve                Bob
+
+a       g^a mod n     c   g^c mod n
+       --------->        --------->
+        g^b mod n  b      g^d mod n   d
+       <---------        <---------
+(g^b)^a mod n    (g^c)^c mod n      (g^c)^d mod n 
+ 
+```
 
 
 ---
@@ -764,7 +781,7 @@ HDR, SK {IDi, [CERT,] [CERTREQ,]
 
 ## Focus on Digital Signature
 
-The purpose of digital signature is to cryptographicaly proves:
+The purpose of digital signature is to cryptographicaly prove:
 * It is really *me* sending the message
 * The message you receive is the one I have sent, e.g. has not been altered
 
@@ -895,7 +912,7 @@ SPD of the VPN Security Gateway
 
 | Traffic Selectors | PFP | SPD Cache |   Processing       |
 |-------------------|-----|-----------|---------------------
-| IP_dst: $IP^{outer}_{MN}$ | 0 | $IP^{outer}_{MN}$ | Policy: BYPASS | 
+| IP_dst: $ANY$     | 0   | $IP^{outer}_{MN}$ | Policy: BYPASS | 
 | IP_src: $IP_{SG}$ | 0   | $IP_{SG}$ |   
 | Port_dst: 500     | 0   | 500       | 
 | Port_src: 500     | 0   | 500       | 
@@ -903,7 +920,7 @@ SPD of the VPN Security Gateway
 | Traffic Selectors | PFP | SPD Cache |   Processing       |
 |-------------------|-----|-----------|---------------------
 | IP_dst: $IP_{SG}$ | 0   | $IP_{SG}$ | Policy: BYPASS   
-| IP_src: $IP^{outer}_{MN}$       | 0   | $IP^{outer}_{MN}$       | 
+| IP_src: $ANY$     | 0   | $IP^{outer}_{MN}$       | 
 | Port_dst: 500     | 0   | 500       | 
 | Port_src: 500     | 0   | 500       | 
 
@@ -1135,7 +1152,7 @@ IP adresses of a packet are important Traffic Selectors likely used in:
 * SPD, SPD Cache
 * SAD
 
-A Mobile Node (MN) IP changes need to reflected in IPsec SAD/SPD:
+A Mobile Node (MN) IP changes need to be reflected in IPsec SAD/SPD:
 * MOBIKE is the IKEv2 extension to enable updating IPsec configuration in Mobility and Multihoming environment
 
 
@@ -1153,7 +1170,7 @@ Initial Phase:
 # MOBIKE - Mobility
 
 Mobility Phase:
-* MN changes ISP and the tunnel endpoint becomes $IP^{outer}_{MN}$
+* MN changes ISP and the tunnel endpoint becomes $IP^{outer}_{NEW\_MN}$
  
 <img  align="center"  src="/home/emigdan/gitlab/ipsec-lecture/prez/fig/protocol-description-sg-mobility.svg" height="500">
 
@@ -1163,7 +1180,7 @@ Mobility Phase:
 Initial Phase:
 * MN connects a server with a private session: $IP^{inner}_{MN}$, $IP^{inner}_{MEDIA}$
 * MN tunnels the private session to the Security Gateway: $IP^{outer}_{MN}$  $IP_{SG}$
-* MN adversice being also reachable on $IP^{outer}_{NEW_MN}$ if $IP^{outer}_{MN}$ fails  
+* MN advertices being also reachable on $IP^{outer}_{NEW\_MN}$ if $IP^{outer}_{MN}$ fails  
 
 <img  align="center"   src="/home/emigdan/gitlab/ipsec-lecture/prez/fig/protocol-description-sg-init-multih.svg" height="500">
 
@@ -1227,12 +1244,12 @@ SAD of the VPN Client, Security Gateway
 
 |Action           |     Traffic Selectors     |   IPsec Signaling                     |  Crypto material    |
 |-----------------|:--------------------------|:--------------------------------------|:--------------------|
-| $SPI_{Clt->SG}$ | IP_dst: ANY               | $IP^{Tunnel}_{src}$: $IP^{outer}_{NEW_MN}$| Crypto: $K_e$, $K_a$| 
+| $SPI_{Clt->SG}$ | IP_dst: ANY               | $IP^{Tunnel}_{src}$: $IP^{outer}_{NEW\_MN}$| Crypto: $K_e$, $K_a$| 
 |                 | IP_src: $IP^{inner}_{MN}$ | $IP^{Tunnel}_{dst}$: $IP_{SG}$| Counters: $C_{ESP}$, $C_w$|
 |                 | Port_dst: ANY             | Proto: ESP
 |                 | Port_src: ANY             | Algo: AES-GCM  
 | $SPI_{SG->Clt}$ | IP_dst: $IP^{inner}_{MN}$ | $IP^{Tunnel}_{src}$: $IP_{SG}$| Crypto: $K_e$, $K_a$| 
-|                 | IP_src: ANY               | $IP^{Tunnel}_{dst}$: $IP^{outer}_{NEW_MN}$| Counters: $C_{ESP}$, $C_w$|
+|                 | IP_src: ANY               | $IP^{Tunnel}_{dst}$: $IP^{outer}_{NEW\_MN}$| Counters: $C_{ESP}$, $C_w$|
 |                 | Port_dst: ANY             | Proto: ESP
 |                 | Port_src: ANY             | Algo: AES-GCM  
 
